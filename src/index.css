@@ -1,13 +1,10 @@
-/* body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
+@import 'bootstrap/dist/css/bootstrap.css';
+ /* Put any other imports below so that CSS from your */
+ /* components takes precedence over default styles. */
+
+@import "../src/assets/css/components.css";
+@import "../src/assets/css/core.css";
+@import "../src/assets/css/icons.css";
+@import "../src/assets/css/pages.css";
+@import "../src/assets/css/responsive.css";

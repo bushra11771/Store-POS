@@ -1,6 +1,6 @@
 
 #transactions_view, #pointofsale {
-  display: none;
+  /* display: none; */
 }
 
 #card-box tr {display: block; }
