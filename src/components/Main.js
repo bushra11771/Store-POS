@@ -1,5 +1,6 @@
 import React from "react";
 import image1 from "../../src/assets/images/loading.gif";
+import { Outlet } from "react-router-dom";
 
 const Main = () => {
   return (
@@ -176,262 +177,8 @@ const Main = () => {
           </div>
         </div>
         <br />
-        <div id="transactions_view">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="card-box">
-                <div className="row">
-                  <h3 className="col-md-2">Transactions</h3>
-                  <div className="col-md-1">
-                    <span>Till</span>
-                    <select id="tills" className="form-control"></select>
-                  </div>
-                  <div className="col-md-2">
-                    <span>Cashier</span>
-                    <select id="users" className="form-control"></select>
-                  </div>
-                  <div className="col-md-1">
-                    <span>Status</span>
-                    <select id="status" className="form-control status">
-                      <option value={1}>Paid</option>
-                      <option value={0}>Unpaid</option>
-                    </select>
-                  </div>
-                  <div className="col-md-3">
-                    <span style={{ width: "100%" }}>Date</span>
-                    <div id="reportrange">
-                      <i className="fa fa-calendar" />
-                      &nbsp;
-                      <span /> <i className="fa fa-caret-down" />
-                    </div>
-                  </div>
-                </div>
-                <hr />
-                <div className="row">
-                  <div className="col-md-5">
-                    <div className="row">
-                      <div className="col-md-8" id="productSales">
-                        <h4>Products</h4>
-                        <hr />
-                        <table
-                          className="table tablesaw-enhanced"
-                          id="productsSold"
-                        >
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Sold</th>
-                              <th>Available</th>
-                              <th>Sales</th>
-                            </tr>
-                          </thead>
-                          <tbody id="product_sales" />
-                        </table>
-                      </div>
-                      <div className="col-md-4" id="totals">
-                        <h4>Total</h4>
-                        <hr />
-                        <div id="total_sales" className="btn-success">
-                          <h5>SALES</h5>
-                          <div id="counter">0</div>
-                        </div>
-                        <div id="total_transactions" className="btn-warning">
-                          <h5>TRANSACTIONS</h5>
-                          <div id="counter">0</div>
-                        </div>
-                        <div id="total_items" className="btn-info">
-                          <h5>ITEMS</h5>
-                          <div id="counter">0</div>
-                        </div>
-                        <div id="total_products" className="btn-default">
-                          <h5>PRODUCTS</h5>
-                          <div id="counter">0</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-7">
-                    <table
-                      className="table tablesaw-enhanced"
-                      id="transactionList"
-                    >
-                      <thead>
-                        <tr>
-                          <th>Invoice</th>
-                          <th>Date</th>
-                          <th>Total</th>
-                          <th>Paid</th>
-                          <th>Change</th>
-                          <th>Method</th>
-                          <th>Till</th>
-                          <th>Cashier</th>
-                          <th>View</th>
-                        </tr>
-                      </thead>
-                      <tbody id="transaction_list" />
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="pos_view">
-          <div className="row">
-            <div className="col-md-4">
-              <div className="card-box" id="card-box">
-                <div className="col-md-12">
-                  <div className="row">
-                    <div className="col-md-10">
-                      <select
-                        name=""
-                        id="customer"
-                        className="form-control"
-                      ></select>
-                    </div>
-                    <div className="col-md-2">
-                      <button
-                        data-toggle="modal"
-                        data-target="#newCustomer"
-                        className="btn btn-success"
-                      >
-                        <i className="fa fa-plus" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="input-group m-t-5">
-                    <form action="" id="searchBarCode">
-                      <input
-                        type="text"
-                        required=""
-                        id="skuCode"
-                        name="skuCode"
-                        className="form-control"
-                        placeholder="Scan barcode or type the number then hit enter"
-                        aria-label="Recipient's username"
-                        aria-describedby="basic-addon2"
-                      />
-                      <input type="submit" style={{ display: "none" }} />
-                    </form>
-                    <span className="input-group-addon" id="basic-addon2">
-                      <i className="glyphicon glyphicon-ok" />
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <table className="table m-0" id="cartTable">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th width="150px">Item</th>
-                        <th width="170px">Qty</th>
-                        <th>Price</th>
-                        <th width="5px">
-                          <button
-                            onclick="$(this).cancelOrder()"
-                            className="btn btn-danger btn-xs"
-                          >
-                            <i className="fa fa-times" />
-                          </button>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                  </table>
-                </div>
-                <hr />
-                <div className="m-t-5">
-                  <div className="row">
-                    <div className="col-md-3">Total Item(s)</div>
-                    <div className="col-md-3">
-                      : <sapn id="total">0</sapn>
-                    </div>
-                    <div className="col-md-3">Price :</div>
-                    <div className="col-md-3">
-                      : <span id="price">0.0</span>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-3">Discount</div>
-                    <div className="col-md-3">
-                      <input
-                        className="form-control"
-                        type="number"
-                        id="inputDiscount"
-                        oninput="$(this).calculateCart();"
-                      />
-                    </div>
-                    <div className="col-md-3">
-                      Gross Price (inc <span id="taxInfo" />% Tax)
-                    </div>
-                    <div className="col-md-3">
-                      <h3 id="gross_price">0.00</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="button-list pull-right">
-                  <button
-                    onclick="$(this).submitDueOrder(3);"
-                    type="button"
-                    className="btn btn-info waves-effect waves-light"
-                  >
-                    <i className="fa fa-print" />
-                  </button>
-                  <button
-                    onclick="$(this).cancelOrder()"
-                    type="button"
-                    className="btn btn-danger waves-effect waves-light"
-                  >
-                    <span className="btn-label">
-                      <i className="fa fa-ban" />
-                    </span>
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    id="hold"
-                    className="btn btn-default waves-effect waves-light"
-                  >
-                    <span className="btn-label">
-                      <i className="fa fa-hand-paper-o" />
-                    </span>
-                    Hold
-                  </button>
-                  <button
-                    type="button"
-                    id="payButton"
-                    className="btn btn-success waves-effect waves-light"
-                  >
-                    <span className="btn-label">
-                      <i className="fa fa-money" />
-                    </span>
-                    Pay
-                  </button>
-                </div>
-                <hr />
-              </div>
-            </div>
-            <div className="col-md-8">
-              <div className="card-box">
-                <div className="row">
-                  <div className="col-md-4">
-                    <input
-                      type="text"
-                      id="search"
-                      className="form-control"
-                      placeholder="Search product by name or sku"
-                    />
-                  </div>
-                  <div className="col-md-8">
-                    <div className="" id="categories"></div>
-                  </div>
-                </div>
-                <hr />
-                <div className="row" id="parent"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Outlet />
+
         <div
           id="dueModal"
           className="modal fade bs-example-modal-sm"
@@ -439,7 +186,7 @@ const Main = () => {
           role="dialog"
           aria-labelledby="mySmallModalLabel"
           aria-hidden="true"
-          // style={{ display: "none" }}
+        // style={{ display: "none" }}
         >
           <div className="modal-dialog modal-sm">
             <div className="modal-content">
@@ -604,7 +351,7 @@ const Main = () => {
           role="dialog"
           aria-labelledby="myLargeModalLabel"
           aria-hidden="true"
-          style={{ display: "none" }}
+        // style={{ display: "none" }}
         >
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
