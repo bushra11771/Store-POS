@@ -84,10 +84,11 @@ const Main = () => {
                 onclick="$(this).getCustomerOrders()"
                 className="btn btn-info waves-effect waves-light"
               >
+                onclick {{}}
                 <span className="btn-label">
                   <i className="fa fa-user" />{" "}
                 </span>{" "}
-                Customer Orders
+                                 Customer Orders
               </button>
             </div>
             <img

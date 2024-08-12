@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "./Modal";
 
-const NewCustomerModal = () => {
+const NewCustomerModal = ({ isOpen, toggle }) => {
   return (
     <Modal
       id="newCustomer"
@@ -9,6 +9,8 @@ const NewCustomerModal = () => {
       formId="saveCustomer"
       submitButtonId="submitCustomer"
       submitButtonText="Save"
+      isOpen={isOpen}
+      toggle={toggle}
       formFields={
         <>
           <div className="form-group">
