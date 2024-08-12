@@ -7,8 +7,8 @@ import PageNotFound from "./pages/PageNotFound";
 import Login from "./views/Login";
 function App() {
   return (
-  
-    
+
+
     <BrowserRouter>
       <Routes>
         <Route
@@ -25,8 +25,8 @@ function App() {
           {/* <Route path="" element={<Contact />} /> */}
         </Route>
         <Route path="*" element={<PageNotFound />} />
-     </Routes>
-     </BrowserRouter>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
