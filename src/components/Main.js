@@ -7,6 +7,7 @@ const Main = () => {
 
 
   const [isOpenPaymentModal, setIsOpenPaymentModal] = useState(true)
+  const [isOpenProductModal, setIsOpenProductModal] = useState(true)
 
   return (
     <div className="main_app">
@@ -520,6 +521,275 @@ const Main = () => {
         {/* /.modal-content */}
         {/* /.modal-dialog */}
         {/* /.modal */}
+
+        <CustomModal title="Payment" modalIsOpen={isOpenPaymentModal} toggle={() => setIsOpenPaymentModal(!isOpenPaymentModal)} footer={<div className="row">
+          <div className="col-md-6">
+            <div className="btn btn-primary btn-block btn-lg waves-effect waves-light">
+              Change <span id="change_curr" />
+              <span id="change" />{" "}
+            </div>
+          </div>
+          <div className="col-md-6">
+            <button
+              type="button"
+              id="confirmPayment"
+              className="btn btn-default btn-block btn-lg waves-effect waves-light"
+            >
+              Confirm Payment
+            </button>
+          </div>
+        </div>}>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="list-group">
+                <a
+                  href="javascript:void(0)"
+                  id="cash"
+                  onclick="paymentType = 1"
+                  className="list-group-item active"
+                >
+                  Cash
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  id="card"
+                  onclick="paymentType = 3"
+                  className="list-group-item"
+                >
+                  Card
+                </a>
+              </div>
+            </div>
+            <div className="col-md-8">
+              <div className="input-group">
+                <span className="input-group-addon" id="basic-addon3">
+                  Price <span id="price_curr" />
+                  <input
+                    id="payablePrice"
+                    readOnly=""
+                    type="number"
+                    className="form-control"
+                    aria-describedby="basic-addon3"
+                  />
+                </span>
+              </div>
+              <br />
+              <div className="input-group">
+                <span className="input-group-addon" id="basic-addon3">
+                  Payment <span id="payment_curr" />{" "}
+                </span>
+                <input
+                  type="text"
+                  placeholder={0.0}
+                  className="form-control"
+                  id="payment"
+                  aria-describedby="basic-addon3"
+                />
+              </div>
+              <hr />
+              <div className="row">
+                <div className="col-md-9">
+                  <div className="row">
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(1,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        1
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(2,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        2
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(3,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        3
+                      </button>
+                    </div>
+                    <div className="col-md-3" />
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(4,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        4
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(5,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        5
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(6,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        6
+                      </button>
+                    </div>
+                    <div className="col-md-3" />
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(7,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        7
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(8,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        8
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(9,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        9
+                      </button>
+                    </div>
+                    <div className="col-md-3" />
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div className="col-md-3">
+                      <button
+                        onclick="$('#payment').val($('#payment').val().substr(0,$('#payment').val().length -1));$(this).calculateChange();"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        ⌫
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).go(0,false);"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        0
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        onclick="$(this).digits()"
+                        className="btn btn-success btn-lg btn-block"
+                      >
+                        .
+                      </button>
+                    </div>
+                    <div className="col-md-3" />
+                  </div>
+                </div>
+                <div className="col-md-3">
+                  <button
+                    onclick="$('#payment').val('');$(this).calculateChange();"
+                    className="btn btn-danger btn-block btn-lg"
+                  >
+                    AC
+                  </button>
+                </div>
+              </div>
+              <br />
+              <div className="input-group" id="cardInfo">
+                <span className="input-group-addon" id="basic-addon3">
+                  Card Info{" "}
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="paymentInfo"
+                  aria-describedby="basic-addon3"
+                />
+              </div>
+            </div>
+          </div>
+        </CustomModal>
+
+
+        <CustomModal
+  modalIsOpen={isOpenPaymentModal}
+>
+  <form action="">
+    
+        <h4 className="modal-title" id="mySmallModalLabel">
+          Products
+          <img
+            className="loading m-t-5"
+            style={{ marginLeft: "35%", height: "50px" }}
+            src="assets/images/loading.gif"
+            alt=""
+          />
+          <button className="btn btn-white pull-right" id="print_list">
+            Download
+          </button>
+        </h4>
+      <div className="modal-body" id="all_products" style={{ padding: "20px" }}>
+        <table className="table table-bordered" id="productList">
+          <thead>
+            <tr>
+              <th>Barcode</th>
+              <th>Item</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Category</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="product_list"></tbody>
+        </table>
+      </div>
+    {/* </div> */}
+  </form>
+</CustomModal>
+
+<CustomModal>
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="mySmallModalLabel">
+                Categories
+                <img class="loading m-t-5" style="margin-left: 35%" height="50px" src="assets/images/loading.gif" alt=""/>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered" id="categoryList">
+                <thead>
+                    <tr> 
+                        <th>Name</th>                                      
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="category_list"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</CustomModal>
+
         <div
           id="newCustomer"
           className="modal fade bs-example-modal-sm"
