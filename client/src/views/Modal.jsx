@@ -11,13 +11,13 @@ function CustomModal(props) {
   } = props;
 
   return (
-    <div>
-      <Modal isOpen={modalIsOpen} toggle={toggle} {...props}>
+    <>
+      <Modal  isOpen={modalIsOpen} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
         <ModalBody>{children}</ModalBody>
         <ModalFooter>{footer}</ModalFooter>
       </Modal>
-    </div>
+    </>
   );
 }
 

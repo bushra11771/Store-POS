@@ -1,13 +1,29 @@
 import React, { useState } from "react";
 import image1 from "../../src/assets/images/loading.gif";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import CustomModal from "../views/Modal";
+import {
+  FaBarcode,
+  FaTh,
+  FaPlus,
+  FaUser,
+  FaRegCreditCard,
+} from "react-icons/fa";
+import { IoSettings } from "react-icons/io5";
+import { FaCartShopping } from "react-icons/fa6";
+import { MdLogout } from "react-icons/md";
+
+import { Button, Table } from "reactstrap";
 
 const Main = () => {
+  const location = useLocation();
+  const [isOpenPaymentModal, setIsOpenPaymentModal] = useState(false);
+  const [isOpenProductModal, setIsOpenProductModal] = useState(false);
+  const [isOpenPayment, setIsOpenPayment] = useState(false);
+  const [isOpenSettingsModal, setIsOpenSettingsModal] = useState(false);
+  const [isOpenNewCategory, setIsOpenNewCategory] = useState(false);
 
-
-  const [isOpenPaymentModal, setIsOpenPaymentModal] = useState(true)
-  const [isOpenProductModal, setIsOpenProductModal] = useState(true)
+  console.log("location", location);
 
   return (
     <div className="main_app">
@@ -20,7 +36,7 @@ const Main = () => {
           alt=""
         />
       </div>
-      <div className="container">
+      <div className="">
         <div className="row">
           <div className="col-sm-12">
             <div className="button-list pull-left m-t-15 m-l-10">
@@ -31,9 +47,12 @@ const Main = () => {
                   data-target="#Products"
                   type="button"
                   className="btn btn-default waves-effect waves-light"
+                  onClick={() => {
+                    setIsOpenProductModal(true);
+                  }}
                 >
                   <span className="btn-label">
-                    <i className=" 	glyphicon glyphicon-barcode" />{" "}
+                    <FaBarcode />
                   </span>{" "}
                   Products
                 </button>
@@ -44,7 +63,7 @@ const Main = () => {
                   type="button"
                   className="btn btn-warning waves-effect waves-light"
                 >
-                  <i className="fa fa-plus" />
+                  <FaPlus />
                 </button>
               </div>
               <div className="btn-group p_two">
@@ -56,16 +75,18 @@ const Main = () => {
                   className="btn btn-default waves-effect waves-light"
                 >
                   <span className="btn-label">
-                    <i className="glyphicon glyphicon-th" />{" "}
+                    <FaTh />{" "}
                   </span>{" "}
                   Categories
                 </button>
                 <button
-                  id="newCategoryModal"
-                  data-toggle="modal"
-                  data-target="#newCategory"
                   type="button"
                   className="btn btn-warning waves-effect waves-light"
+                  onClick={() => {
+                    console.log("categories selected");
+
+                    setIsOpenNewCategory(true);
+                  }}
                 >
                   <i className="fa fa-plus" />
                 </button>
@@ -91,48 +112,47 @@ const Main = () => {
                 className="btn btn-info waves-effect waves-light"
               >
                 <span className="btn-label">
-                  <i className="fa fa-user" />{" "}
+                  <FaUser />{" "}
                 </span>{" "}
                 Customer Orders
               </button>
             </div>
-            <img
+            {/* <img
               className="loading m-t-5"
               style={{ marginLeft: "35%" }}
               height="50px"
               src="assets/images/loading.gif"
               alt=""
-            />
+            /> */}
             <div className="button-list pull-right m-t-15 m-l-10">
               <button
-                id="settings"
-                data-toggle="modal"
-                data-target="#settingsModal"
                 type="button"
                 className="btn btn-default waves-effect waves-light p_five"
+                onClick={() => setIsOpenSettingsModal(true)}
               >
-                <i className="glyphicon glyphicon-cog" />
+                <IoSettings />
               </button>
-              <button
-                id="transactions"
-                type="button"
-                className="btn btn-default waves-effect waves-light p_three"
-              >
-                <span className="btn-label">
-                  <i className=" 	glyphicon glyphicon-credit-card" />{" "}
-                </span>{" "}
-                Transactions
-              </button>
-              <button
-                id="pointofsale"
-                type="button"
-                className="btn btn-default waves-effect waves-light"
-              >
-                <span className="btn-label">
-                  <i className=" 	glyphicon glyphicon-shopping-cart" />{" "}
-                </span>{" "}
-                Point of Sale
-              </button>
+              {location.pathname === "/pos" ? (
+                <Link
+                  to={"/transactions"}
+                  className="btn btn-default waves-effect waves-light p_three"
+                >
+                  <span className="btn-label">
+                    <FaRegCreditCard />{" "}
+                  </span>{" "}
+                  Transactions
+                </Link>
+              ) : (
+                <Link
+                  to={"/pos"}
+                  className="btn btn-default waves-effect waves-light"
+                >
+                  <span className="btn-label">
+                    <FaCartShopping />
+                  </span>{" "}
+                  Point of Sale
+                </Link>
+              )}
               <div className="btn-group p_four">
                 <button
                   id="usersModal"
@@ -142,7 +162,7 @@ const Main = () => {
                   className="btn btn-default waves-effect waves-light"
                 >
                   <span className="btn-label">
-                    <i className=" 	glyphicon glyphicon-user" />{" "}
+                    <FaUser />
                   </span>{" "}
                   Users
                 </button>
@@ -150,7 +170,7 @@ const Main = () => {
                   id="add-user"
                   data-toggle="modal"
                   type="button"
-                  className="btn btn-dark waves-effect waves-light"
+                  className="btn btn-gray waves-effect waves-light"
                 >
                   <i className="fa fa-plus" />
                 </button>
@@ -161,38 +181,42 @@ const Main = () => {
                 id="cashier"
               >
                 <span className="btn-label">
-                  <i className="glyphicon glyphicon-user" />{" "}
+                  <FaUser />
                 </span>{" "}
-                <span id="loggedin-user" />
+                {/* <span id="loggedin-user"></span> */}
               </button>
               <button
                 id="log-out"
                 type="button"
                 className="btn btn-warning waves-effect waves-light"
               >
-                <i className="glyphicon glyphicon-log-out" />
+                <MdLogout />
               </button>
-              <button
+              {/* <button
                 id="quit"
                 type="button"
                 className="btn btn-danger waves-effect waves-light"
               >
                 <i className="glyphicon glyphicon-off" />
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
         <br />
         <Outlet />
 
-
-        <CustomModal modalIsOpen={isOpenPaymentModal} footer={<button
-          type="button"
-          onclick="$(this).submitDueOrder(0);"
-          className="btn btn-primary btn-block btn-lg waves-effect waves-light"
+        <CustomModal
+          modalIsOpen={isOpenPaymentModal}
+          footer={
+            <button
+              type="button"
+              onclick="$(this).submitDueOrder(0);"
+              className="btn btn-primary btn-block btn-lg waves-effect waves-light"
+            >
+              Hold Order
+            </button>
+          }
         >
-          Hold Order
-        </button>} >
           <form action="">
             <input
               type="text"
@@ -309,29 +333,34 @@ const Main = () => {
               </button>
             </div>
           </div>
-
-
         </CustomModal>
         {/* /.modal-dialog */}
         {/* /.modal */}
         {/*  Modal content for the above example */}
-        <CustomModal title="Payment" modalIsOpen={isOpenPaymentModal} toggle={() => setIsOpenPaymentModal(!isOpenPaymentModal)} footer={<div className="row">
-          <div className="col-md-6">
-            <div className="btn btn-primary btn-block btn-lg waves-effect waves-light">
-              Change <span id="change_curr" />
-              <span id="change" />{" "}
+        <CustomModal
+          title="Payment"
+          modalIsOpen={isOpenPaymentModal}
+          toggle={() => setIsOpenPaymentModal(!isOpenPaymentModal)}
+          footer={
+            <div className="row">
+              <div className="col-md-6">
+                <div className="btn btn-primary btn-block btn-lg waves-effect waves-light">
+                  Change <span id="change_curr" />
+                  <span id="change" />{" "}
+                </div>
+              </div>
+              <div className="col-md-6">
+                <button
+                  type="button"
+                  id="confirmPayment"
+                  className="btn btn-default btn-block btn-lg waves-effect waves-light"
+                >
+                  Confirm Payment
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="col-md-6">
-            <button
-              type="button"
-              id="confirmPayment"
-              className="btn btn-default btn-block btn-lg waves-effect waves-light"
-            >
-              Confirm Payment
-            </button>
-          </div>
-        </div>}>
+          }
+        >
           <div className="row">
             <div className="col-md-4">
               <div className="list-group">
@@ -522,23 +551,30 @@ const Main = () => {
         {/* /.modal-dialog */}
         {/* /.modal */}
 
-        <CustomModal title="Payment" modalIsOpen={isOpenPaymentModal} toggle={() => setIsOpenPaymentModal(!isOpenPaymentModal)} footer={<div className="row">
-          <div className="col-md-6">
-            <div className="btn btn-primary btn-block btn-lg waves-effect waves-light">
-              Change <span id="change_curr" />
-              <span id="change" />{" "}
+        <CustomModal
+          title="Payment"
+          modalIsOpen={isOpenPaymentModal}
+          toggle={() => setIsOpenPaymentModal(!isOpenPaymentModal)}
+          footer={
+            <div className="row">
+              <div className="col-md-6">
+                <div className="btn btn-primary btn-block btn-lg waves-effect waves-light">
+                  Change <span id="change_curr" />
+                  <span id="change" />{" "}
+                </div>
+              </div>
+              <div className="col-md-6">
+                <button
+                  type="button"
+                  id="confirmPayment"
+                  className="btn btn-default btn-block btn-lg waves-effect waves-light"
+                >
+                  Confirm Payment
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="col-md-6">
-            <button
-              type="button"
-              id="confirmPayment"
-              className="btn btn-default btn-block btn-lg waves-effect waves-light"
-            >
-              Confirm Payment
-            </button>
-          </div>
-        </div>}>
+          }
+        >
           <div className="row">
             <div className="col-md-4">
               <div className="list-group">
@@ -726,69 +762,79 @@ const Main = () => {
           </div>
         </CustomModal>
 
+        <CustomModal modalIsOpen={isOpenPaymentModal}>
+          <h4 className="modal-title" id="mySmallModalLabel">
+            Products
+            <img
+              className="loading m-t-5"
+              style={{ marginLeft: "35%", height: "50px" }}
+              src="assets/images/loading.gif"
+              alt=""
+            />
+            <button className="btn btn-white pull-right" id="print_list">
+              Download
+            </button>
+          </h4>
+          <div
+            className="modal-body"
+            id="all_products"
+            style={{ padding: "20px" }}
+          >
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Barcode</th>
+                  <th>Item</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Category</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="product_list"></tbody>
+            </Table>
+          </div>
+          {/* </div> */}
+        </CustomModal>
 
-        <CustomModal
-  modalIsOpen={isOpenPaymentModal}
->
-  <form action="">
-    
-        <h4 className="modal-title" id="mySmallModalLabel">
-          Products
-          <img
-            className="loading m-t-5"
-            style={{ marginLeft: "35%", height: "50px" }}
-            src="assets/images/loading.gif"
-            alt=""
-          />
-          <button className="btn btn-white pull-right" id="print_list">
-            Download
-          </button>
-        </h4>
-      <div className="modal-body" id="all_products" style={{ padding: "20px" }}>
-        <table className="table table-bordered" id="productList">
-          <thead>
-            <tr>
-              <th>Barcode</th>
-              <th>Item</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Category</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="product_list"></tbody>
-        </table>
-      </div>
-    {/* </div> */}
-  </form>
-</CustomModal>
-
-<CustomModal>
-<div class="modal-dialog modal-md">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title" id="mySmallModalLabel">
-                Categories
-                <img class="loading m-t-5" style="margin-left: 35%" height="50px" src="assets/images/loading.gif" alt=""/>
-            </h4>
-        </div>
-        <div class="modal-body">
-            <table class="table table-bordered" id="categoryList">
-                <thead>
-                    <tr> 
-                        <th>Name</th>                                      
-                        <th>Action</th>
+        <CustomModal>
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                >
+                  ×
+                </button>
+                <h4 class="modal-title" id="mySmallModalLabel">
+                  Categories
+                  <img
+                    class="loading m-t-5"
+                    style="margin-left: 35%"
+                    height="50px"
+                    src="assets/images/loading.gif"
+                    alt=""
+                  />
+                </h4>
+              </div>
+              <div class="modal-body">
+                <table class="table table-bordered" id="categoryList">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Action</th>
                     </tr>
-                </thead>
-                <tbody id="category_list"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-</CustomModal>
+                  </thead>
+                  <tbody id="category_list"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </CustomModal>
 
         <div
           id="newCustomer"
@@ -985,73 +1031,42 @@ const Main = () => {
             </div>
           </div>
         </div>
-        <div
-          id="newCategory"
-          className="modal fade bs-example-modal-sm"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="mySmallModalLabel"
-          aria-hidden="true"
-          style={{ display: "none" }}
+        {/* newCategory */}
+        <CustomModal
+          modalIsOpen={isOpenNewCategory}
+          toggle={() => setIsOpenNewCategory(!isOpenNewCategory)}
+          title={"Category"}
         >
-          <div className="modal-dialog modal-md">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
-                >
-                  ×
-                </button>
-                <h4 className="modal-title" id="mySmallModalLabel">
-                  Category
-                  <img
-                    className="loading m-t-5"
-                    style={{ marginLeft: "35%" }}
-                    height="50px"
-                    src="assets/images/loading.gif"
-                    alt=""
-                  />
-                </h4>
-              </div>
-              <div className="modal-body">
-                <form id="saveCategory">
-                  <div className="form-group">
-                    <label htmlFor="userName">Name</label>
-                    <input id="category_id" type="hidden" name="id" />
-                    <input
-                      id="categoryName"
-                      type="text"
-                      required="required"
-                      name="name"
-                      placeholder="Enter a category name"
-                      className="form-control"
-                    />
-                  </div>
-                  <input
-                    type="submit"
-                    id="submitCategory"
-                    className="btn btn-primary btn-block waves-effect waves-light"
-                  />
-                </form>
-              </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="userName">Name</label>
+              <input id="category_id" type="hidden" name="id" />
+              <input
+                id="categoryName"
+                type="text"
+                required="required"
+                name="name"
+                placeholder="Enter a category name"
+                className="form-control"
+              />
             </div>
-          </div>
-        </div>
-        <div
-          id="Products"
-          className="modal fade bs-example-modal-sm"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="mySmallModalLabel"
-          aria-hidden="true"
-          style={{ display: "none" }}
-        >
-          <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-              <div className="modal-header">
+            <Button
+              block
+              type="submit"
+              id="submitCategory"
+              className="btn btn-primary block mt-2 waves-effect waves-light"
+            >
+              Submit
+            </Button>
+          </form>
+        </CustomModal>
+        {/* Products */}
+
+        {/* <div className="modal-header">
                 <button
                   type="button"
                   className="close"
@@ -1073,30 +1088,26 @@ const Main = () => {
                     Download
                   </button>
                 </h4>
-              </div>
-              <div
-                className="modal-body"
-                id="all_products"
-                style={{ padding: 20, paddingRight: 40 }}
-              >
-                <table className="table table-bordered" id="productList">
-                  <thead>
-                    <tr>
-                      <th>Barcode</th>
-                      <th>Item</th>
-                      <th>Name</th>
-                      <th>Price</th>
-                      <th>Stock</th>
-                      <th>Category</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody id="product_list" />
-                </table>
-              </div>
-            </div>
+              </div> */}
+        <CustomModal modalIsOpen={true}>
+          <div className="w-100">
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Barcode</th>
+                  <th>Item</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Category</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody />
+            </Table>
           </div>
-        </div>
+        </CustomModal>
+        {/* Users */}
         <div
           id="Users"
           className="modal fade bs-example-modal-sm"
@@ -1148,6 +1159,7 @@ const Main = () => {
             </div>
           </div>
         </div>
+        {/* Categories */}
         <div
           id="Categories"
           className="modal fade bs-example-modal-sm"
@@ -1193,6 +1205,7 @@ const Main = () => {
             </div>
           </div>
         </div>
+        {/* user Modal */}
         <div
           id="userModal"
           className="modal fade bs-example-modal-sm"
@@ -1335,6 +1348,7 @@ const Main = () => {
             </div>
           </div>
         </div>
+        {/* holdOrdersModal */}
         <div
           id="holdOrdersModal"
           className="modal fade bs-example-modal-lg"
@@ -1385,6 +1399,7 @@ const Main = () => {
             </div>
           </div>
         </div>
+        {/* customerModal */}
         <div
           id="customerModal"
           className="modal fade bs-example-modal-lg"
@@ -1431,6 +1446,7 @@ const Main = () => {
             </div>
           </div>
         </div>
+        {/* orderModal */}
         <div
           id="orderModal"
           className="modal fade bs-example-modal-sm"
@@ -1467,18 +1483,16 @@ const Main = () => {
             </div>
           </div>
         </div>
-        <div
-          id="settingsModal"
-          className="modal fade bs-example-modal-sm"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="mySmallModalLabel"
-          aria-hidden="true"
-          style={{ display: "none" }}
+
+        {/* settingsModal */}
+        <CustomModal
+          modalIsOpen={isOpenSettingsModal}
+          title={"Settings"}
+          toggle={() => setIsOpenSettingsModal(!isOpenSettingsModal)}
         >
-          <div className="modal-dialog modal-md">
-            <div className="modal-content">
-              <div className="modal-header">
+          {/* <div className="modal-dialog modal-md">
+            <div className="modal-content"> */}
+          {/* <div className="modal-header">
                 <button
                   type="button"
                   className="close"
@@ -1497,200 +1511,193 @@ const Main = () => {
                     alt=""
                   />
                 </h4>
+              </div> */}
+          {/* <div className="modal-body"> */}
+          <div className="form-group">
+            <label htmlFor="app">Application</label>
+            <select name="app" id="app" className="form-control">
+              <option>Standalone Point of Sale</option>
+              <option>Network Point of Sale Terminal</option>
+              <option>Network Point of Sale Server</option>
+            </select>
+          </div>
+          <form id="net_settings_form">
+            <div className="row">
+              <div className="form-group">
+                <label htmlFor="userName">Server IP Address*</label>
+                <input
+                  type="text"
+                  required="required"
+                  placeholder="Enter the IP address of the admin computer."
+                  name="ip"
+                  className="form-control"
+                  id="ip"
+                />
               </div>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="app">Application</label>
-                  <select name="app" id="app" className="form-control">
-                    <option>Standalone Point of Sale</option>
-                    <option>Network Point of Sale Terminal</option>
-                    <option>Network Point of Sale Server</option>
-                  </select>
-                </div>
-                <form id="net_settings_form">
-                  <div className="row">
-                    <div className="form-group">
-                      <label htmlFor="userName">Server IP Address*</label>
-                      <input
-                        type="text"
-                        required="required"
-                        placeholder="Enter the IP address of the admin computer."
-                        name="ip"
-                        className="form-control"
-                        id="ip"
-                      />
-                    </div>
-                    <div className="row">
-                      <div className="col-md-5">
-                        <div className="form-group">
-                          <label htmlFor="userName">Till Number*</label>
-                          <input
-                            type="text"
-                            required="required"
-                            placeholder="Enter a number"
-                            name="till"
-                            className="form-control"
-                            id="till"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-7">
-                        <div className="form-group">
-                          <label htmlFor="userName">
-                            Hardware Identification Number{" "}
-                          </label>
-                          <input
-                            type="text"
-                            required="required"
-                            name="mac"
-                            className="form-control"
-                            id="mac"
-                            readOnly="readonly"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <input
-                        id="save_settings"
-                        type="submit"
-                        className="btn btn-default btn-block waves-effect waves-light"
-                        defaultValue="Save Settings"
-                      />
-                    </div>
-                  </div>
-                </form>
-                <form id="settings_form" encType="multipart/form-data">
-                  <input type="hidden" name="id" id="settings_id" />
-                  <input type="hidden" name="img" id="logo_img" />
-                  <input type="hidden" name="remove" id="remove_logo" />
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <label htmlFor="userName">Store Name</label>
-                        <input
-                          type="text"
-                          required="required"
-                          name="store"
-                          className="form-control"
-                          id="store"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="userName">Address Line 1</label>
-                        <input
-                          type="text"
-                          required="required"
-                          name="address_one"
-                          className="form-control"
-                          id="address_one"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="userName">Address Line 2</label>
-                        <input
-                          type="text"
-                          required="required"
-                          name="address_two"
-                          className="form-control"
-                          id="address_two"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="userName">Contact Number</label>
-                        <input
-                          type="text"
-                          name="contact"
-                          className="form-control"
-                          id="contact"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="userName">Vat Number</label>
-                        <input
-                          type="text"
-                          name="tax"
-                          parsley-trigger="change"
-                          className="form-control"
-                          id="tax"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <label htmlFor="userName">Currency Symbol</label>
-                        <input
-                          type="text"
-                          required="required"
-                          name="symbol"
-                          className="form-control"
-                          id="symbol"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="userName">Vat Percentage</label>
-                        <div style={{ width: "80%", float: "left" }}>
-                          <input
-                            type="text"
-                            required="required"
-                            name="percentage"
-                            className="form-control"
-                            id="percentage"
-                          />
-                        </div>
-                        <div className="pull-right p-t-10"> % </div>
-                      </div>
-                      <br />
-                      <br />
-                      <div className="form-group">
-                        <label>
-                          <input
-                            type="checkbox"
-                            name="charge_tax"
-                            id="charge_tax"
-                          />{" "}
-                          Charge Vat
-                        </label>
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="userName">
-                          <span
-                            id="rmv_logo"
-                            className="btn btn-xs btn-warning"
-                          >
-                            Remove
-                          </span>{" "}
-                          Logo{" "}
-                        </label>
-                        <div id="current_logo" />
-                        <input type="file" name="imagename" id="logoname" />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="userName">Receipt Footer</label>
-                        <textarea
-                          name="footer"
-                          className="form-control"
-                          id="footer"
-                          defaultValue={""}
-                        />
-                      </div>
-                    </div>
-                  </div>
+              <div className="row">
+                <div className="col-md-5">
                   <div className="form-group">
+                    <label htmlFor="userName">Till Number*</label>
                     <input
-                      id="save_settings"
-                      type="submit"
-                      className="btn btn-default btn-block waves-effect waves-light"
-                      defaultValue="Save Settings"
+                      type="text"
+                      required="required"
+                      placeholder="Enter a number"
+                      name="till"
+                      className="form-control"
+                      id="till"
                     />
                   </div>
-                </form>
+                </div>
+                <div className="col-md-7">
+                  <div className="form-group">
+                    <label htmlFor="userName">
+                      Hardware Identification Number{" "}
+                    </label>
+                    <input
+                      type="text"
+                      required="required"
+                      name="mac"
+                      className="form-control"
+                      id="mac"
+                      readOnly="readonly"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-group">
+                <input
+                  id="save_settings"
+                  type="submit"
+                  className="btn btn-default btn-block waves-effect waves-light"
+                  defaultValue="Save Settings"
+                />
               </div>
             </div>
-          </div>
-        </div>
-      </div >
-    </div >
+          </form>
+          <form id="settings_form" encType="multipart/form-data">
+            <input type="hidden" name="id" id="settings_id" />
+            <input type="hidden" name="img" id="logo_img" />
+            <input type="hidden" name="remove" id="remove_logo" />
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="userName">Store Name</label>
+                  <input
+                    type="text"
+                    required="required"
+                    name="store"
+                    className="form-control"
+                    id="store"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userName">Address Line 1</label>
+                  <input
+                    type="text"
+                    required="required"
+                    name="address_one"
+                    className="form-control"
+                    id="address_one"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userName">Address Line 2</label>
+                  <input
+                    type="text"
+                    required="required"
+                    name="address_two"
+                    className="form-control"
+                    id="address_two"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userName">Contact Number</label>
+                  <input
+                    type="text"
+                    name="contact"
+                    className="form-control"
+                    id="contact"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userName">Vat Number</label>
+                  <input
+                    type="text"
+                    name="tax"
+                    parsley-trigger="change"
+                    className="form-control"
+                    id="tax"
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="userName">Currency Symbol</label>
+                  <input
+                    type="text"
+                    required="required"
+                    name="symbol"
+                    className="form-control"
+                    id="symbol"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userName">Vat Percentage</label>
+                  <div style={{ width: "80%", float: "left" }}>
+                    <input
+                      type="text"
+                      required="required"
+                      name="percentage"
+                      className="form-control"
+                      id="percentage"
+                    />
+                  </div>
+                  <div className="pull-right p-t-10"> % </div>
+                </div>
+                <br />
+                <br />
+                <div className="form-group">
+                  <label>
+                    <input type="checkbox" name="charge_tax" id="charge_tax" />{" "}
+                    Charge Vat
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userName">
+                    <span id="rmv_logo" className="btn btn-xs btn-warning">
+                      Remove
+                    </span>{" "}
+                    Logo{" "}
+                  </label>
+                  <div id="current_logo" />
+                  <input type="file" name="imagename" id="logoname" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userName">Receipt Footer</label>
+                  <textarea
+                    name="footer"
+                    className="form-control"
+                    id="footer"
+                    defaultValue={""}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="form-group">
+              <Button
+                type="submit"
+                className="btn btn-default btn-block waves-effect waves-light"
+              >
+                Save Settings
+              </Button>
+            </div>
+          </form>
+          {/* </div>
+            </div> */}
+          {/* </div> */}
+        </CustomModal>
+      </div>
+    </div>
   );
 };
 
