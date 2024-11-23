@@ -8,12 +8,14 @@ function CustomModal(props) {
     modalIsOpen = false,
     title = "Title",
     footer,
+    header,
+    tag = "h4", 
   } = props;
 
   return (
     <>
-      <Modal  isOpen={modalIsOpen} toggle={toggle} {...props}>
-        <ModalHeader toggle={toggle}>{title}</ModalHeader>
+      <Modal   isOpen={modalIsOpen} toggle={toggle} {...props}>
+        {header?header:<ModalHeader tag={tag} toggle={toggle}>{title}</ModalHeader>}
         <ModalBody>{children}</ModalBody>
         <ModalFooter>{footer}</ModalFooter>
       </Modal>

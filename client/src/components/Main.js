@@ -13,15 +13,22 @@ import { IoSettings } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
 
-import { Button, Table } from "reactstrap";
+import { Button, FormGroup, Input, Label, Table } from "reactstrap";
 
 const Main = () => {
   const location = useLocation();
   const [isOpenPaymentModal, setIsOpenPaymentModal] = useState(false);
   const [isOpenProductModal, setIsOpenProductModal] = useState(false);
+
   const [isOpenPayment, setIsOpenPayment] = useState(false);
   const [isOpenSettingsModal, setIsOpenSettingsModal] = useState(false);
   const [isOpenNewCategory, setIsOpenNewCategory] = useState(false);
+  const [isOpenProductList, setIsOpenProductList] = useState(false);
+  const [isOpenCategoryList, setIsOpenCategoryList] = useState(false);
+  const [isOpenCustomerOders, setIsOpenCustomerOders] = useState(false);
+  const [isOpenOpenTabs, setIsOpenOpenTabs] = useState(false);
+  const [isOpenUser, setIsOpenUser] = useState(false);
+  const [isOpenUsersList, setIsOpenUsersList] = useState(false);
 
   console.log("location", location);
 
@@ -41,36 +48,27 @@ const Main = () => {
           <div className="col-sm-12">
             <div className="button-list pull-left m-t-15 m-l-10">
               <div className="btn-group p_one">
-                <button
-                  id="productModal"
-                  data-toggle="modal"
-                  data-target="#Products"
+                <Button
                   type="button"
                   className="btn btn-default waves-effect waves-light"
-                  onClick={() => {
-                    setIsOpenProductModal(true);
-                  }}
+                  onClick={() => setIsOpenProductList(true)}
                 >
                   <span className="btn-label">
                     <FaBarcode />
-                  </span>{" "}
+                  </span>
                   Products
-                </button>
-                <button
-                  id="newProductModal"
-                  data-toggle="modal"
-                  data-target="#newProduct"
+                </Button>
+                <Button
+                  onClick={() => setIsOpenProductModal(true)}
                   type="button"
                   className="btn btn-warning waves-effect waves-light"
                 >
                   <FaPlus />
-                </button>
+                </Button>
               </div>
               <div className="btn-group p_two">
-                <button
-                  id="categoryModal"
-                  data-toggle="modal"
-                  data-target="#Categories"
+                <Button
+                  onClick={() => setIsOpenCategoryList(true)}
                   type="button"
                   className="btn btn-default waves-effect waves-light"
                 >
@@ -78,8 +76,8 @@ const Main = () => {
                     <FaTh />{" "}
                   </span>{" "}
                   Categories
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
                   className="btn btn-warning waves-effect waves-light"
                   onClick={() => {
@@ -89,49 +87,43 @@ const Main = () => {
                   }}
                 >
                   <i className="fa fa-plus" />
-                </button>
+                </Button>
               </div>
-              <button
+              <Button
                 id="viewRefOrders"
                 data-toggle="modal"
                 data-target="#holdOrdersModal"
                 type="button"
                 className="btn btn-info waves-effect waves-light"
+                onClick={() => setIsOpenOpenTabs(true)}
               >
                 <span className="btn-label">
                   <i className="fa fa-shopping-basket" />{" "}
                 </span>{" "}
                 Open Tabs
-              </button>
-              <button
+              </Button>
+              <Button
                 id="viewCustomerOrders"
                 data-toggle="modal"
                 data-target="#customerModal"
                 type="button"
-                onclick="$(this).getCustomerOrders()"
+                onClick={() => setIsOpenCustomerOders(true)}
                 className="btn btn-info waves-effect waves-light"
               >
                 <span className="btn-label">
                   <FaUser />{" "}
                 </span>{" "}
                 Customer Orders
-              </button>
+              </Button>
             </div>
-            {/* <img
-              className="loading m-t-5"
-              style={{ marginLeft: "35%" }}
-              height="50px"
-              src="assets/images/loading.gif"
-              alt=""
-            /> */}
             <div className="button-list pull-right m-t-15 m-l-10">
-              <button
+              <Button
                 type="button"
                 className="btn btn-default waves-effect waves-light p_five"
                 onClick={() => setIsOpenSettingsModal(true)}
               >
                 <IoSettings />
-              </button>
+              </Button>
               {location.pathname === "/pos" ? (
                 <Link
                   to={"/transactions"}
@@ -154,28 +146,27 @@ const Main = () => {
                 </Link>
               )}
               <div className="btn-group p_four">
-                <button
+                <Button
                   id="usersModal"
-                  data-toggle="modal"
-                  data-target="#Users"
                   type="button"
+                  onClick={() => setIsOpenUsersList(!isOpenUsersList)}
                   className="btn btn-default waves-effect waves-light"
                 >
                   <span className="btn-label">
                     <FaUser />
                   </span>{" "}
                   Users
-                </button>
-                <button
-                  id="add-user"
+                </Button>
+                <Button
                   data-toggle="modal"
                   type="button"
                   className="btn btn-gray waves-effect waves-light"
+                  onClick={() => setIsOpenUser(!isOpenUser)}
                 >
                   <i className="fa fa-plus" />
-                </button>
+                </Button>
               </div>
-              <button
+              <Button
                 type="button"
                 className="btn btn-light waves-effect waves-light"
                 id="cashier"
@@ -184,37 +175,36 @@ const Main = () => {
                   <FaUser />
                 </span>{" "}
                 {/* <span id="loggedin-user"></span> */}
-              </button>
-              <button
+              </Button>
+              <Button
                 id="log-out"
                 type="button"
                 className="btn btn-warning waves-effect waves-light"
               >
                 <MdLogout />
-              </button>
-              {/* <button
+              </Button>
+              {/* <Button
                 id="quit"
                 type="button"
                 className="btn btn-danger waves-effect waves-light"
               >
                 <i className="glyphicon glyphicon-off" />
-              </button> */}
+              </Button> */}
             </div>
           </div>
         </div>
         <br />
         <Outlet />
-
         <CustomModal
           modalIsOpen={isOpenPaymentModal}
           footer={
-            <button
+            <Button
               type="button"
               onclick="$(this).submitDueOrder(0);"
               className="btn btn-primary btn-block btn-lg waves-effect waves-light"
             >
               Hold Order
-            </button>
+            </Button>
           }
         >
           <form action="">
@@ -228,109 +218,109 @@ const Main = () => {
           <hr />
           <div className="row">
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(1,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 1
-              </button>
+              </Button>
             </div>
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(2,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 2
-              </button>
+              </Button>
             </div>
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(3,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 3
-              </button>
+              </Button>
             </div>
           </div>
           <br />
           <div className="row">
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(4,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 4
-              </button>
+              </Button>
             </div>
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(5,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 5
-              </button>
+              </Button>
             </div>
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(6,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 6
-              </button>
+              </Button>
             </div>
           </div>
           <br />
           <div className="row">
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(7,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 7
-              </button>
+              </Button>
             </div>
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(8,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 8
-              </button>
+              </Button>
             </div>
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(9,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 9
-              </button>
+              </Button>
             </div>
           </div>
           <br />
           <div className="row">
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$('#refNumber').val($('#refNumber').val().substr(0,$('#refNumber').val().length -1))"
                 className="btn btn-success btn-lg btn-block"
               >
                 ⌫
-              </button>
+              </Button>
             </div>
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$(this).go(0,true);"
                 className="btn btn-success btn-lg btn-block"
               >
                 0
-              </button>
+              </Button>
             </div>
             <div className="col-md-4">
-              <button
+              <Button
                 onclick="$('#refNumber').val('')"
                 className="btn btn-success btn-lg btn-block"
               >
                 AC
-              </button>
+              </Button>
             </div>
           </div>
         </CustomModal>
@@ -350,13 +340,13 @@ const Main = () => {
                 </div>
               </div>
               <div className="col-md-6">
-                <button
+                <Button
                   type="button"
                   id="confirmPayment"
                   className="btn btn-default btn-block btn-lg waves-effect waves-light"
                 >
                   Confirm Payment
-                </button>
+                </Button>
               </div>
             </div>
           }
@@ -413,123 +403,123 @@ const Main = () => {
                 <div className="col-md-9">
                   <div className="row">
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(1,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         1
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(2,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         2
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(3,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         3
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3" />
                   </div>
                   <br />
                   <div className="row">
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(4,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         4
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(5,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         5
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(6,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         6
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3" />
                   </div>
                   <br />
                   <div className="row">
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(7,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         7
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(8,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         8
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(9,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         9
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3" />
                   </div>
                   <br />
                   <div className="row">
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$('#payment').val($('#payment').val().substr(0,$('#payment').val().length -1));$(this).calculateChange();"
                         className="btn btn-success btn-lg btn-block"
                       >
                         ⌫
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(0,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         0
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).digits()"
                         className="btn btn-success btn-lg btn-block"
                       >
                         .
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3" />
                   </div>
                 </div>
                 <div className="col-md-3">
-                  <button
+                  <Button
                     onclick="$('#payment').val('');$(this).calculateChange();"
                     className="btn btn-danger btn-block btn-lg"
                   >
                     AC
-                  </button>
+                  </Button>
                 </div>
               </div>
               <br />
@@ -550,7 +540,6 @@ const Main = () => {
         {/* /.modal-content */}
         {/* /.modal-dialog */}
         {/* /.modal */}
-
         <CustomModal
           title="Payment"
           modalIsOpen={isOpenPaymentModal}
@@ -564,13 +553,13 @@ const Main = () => {
                 </div>
               </div>
               <div className="col-md-6">
-                <button
+                <Button
                   type="button"
                   id="confirmPayment"
                   className="btn btn-default btn-block btn-lg waves-effect waves-light"
                 >
                   Confirm Payment
-                </button>
+                </Button>
               </div>
             </div>
           }
@@ -627,123 +616,123 @@ const Main = () => {
                 <div className="col-md-9">
                   <div className="row">
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(1,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         1
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(2,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         2
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(3,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         3
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3" />
                   </div>
                   <br />
                   <div className="row">
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(4,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         4
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(5,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         5
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(6,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         6
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3" />
                   </div>
                   <br />
                   <div className="row">
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(7,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         7
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(8,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         8
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(9,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         9
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3" />
                   </div>
                   <br />
                   <div className="row">
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$('#payment').val($('#payment').val().substr(0,$('#payment').val().length -1));$(this).calculateChange();"
                         className="btn btn-success btn-lg btn-block"
                       >
                         ⌫
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).go(0,false);"
                         className="btn btn-success btn-lg btn-block"
                       >
                         0
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3">
-                      <button
+                      <Button
                         onclick="$(this).digits()"
                         className="btn btn-success btn-lg btn-block"
                       >
                         .
-                      </button>
+                      </Button>
                     </div>
                     <div className="col-md-3" />
                   </div>
                 </div>
                 <div className="col-md-3">
-                  <button
+                  <Button
                     onclick="$('#payment').val('');$(this).calculateChange();"
                     className="btn btn-danger btn-block btn-lg"
                   >
                     AC
-                  </button>
+                  </Button>
                 </div>
               </div>
               <br />
@@ -761,7 +750,6 @@ const Main = () => {
             </div>
           </div>
         </CustomModal>
-
         <CustomModal modalIsOpen={isOpenPaymentModal}>
           <h4 className="modal-title" id="mySmallModalLabel">
             Products
@@ -771,9 +759,9 @@ const Main = () => {
               src="assets/images/loading.gif"
               alt=""
             />
-            <button className="btn btn-white pull-right" id="print_list">
+            <Button className="btn btn-white pull-right" id="print_list">
               Download
-            </button>
+            </Button>
           </h4>
           <div
             className="modal-body"
@@ -797,45 +785,23 @@ const Main = () => {
           </div>
           {/* </div> */}
         </CustomModal>
-
-        <CustomModal>
-          <div class="modal-dialog modal-md">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
-                >
-                  ×
-                </button>
-                <h4 class="modal-title" id="mySmallModalLabel">
-                  Categories
-                  <img
-                    class="loading m-t-5"
-                    style="margin-left: 35%"
-                    height="50px"
-                    src="assets/images/loading.gif"
-                    alt=""
-                  />
-                </h4>
-              </div>
-              <div class="modal-body">
-                <table class="table table-bordered" id="categoryList">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody id="category_list"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+        {/* Categories list */}
+        <CustomModal
+          title={"Categories"}
+          toggle={() => setIsOpenCategoryList(!isOpenCategoryList)}
+          modalIsOpen={isOpenCategoryList}
+        >
+          <Table responsive class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="category_list"></tbody>
+          </Table>
         </CustomModal>
-
+        {/* newCustomer */}
         <div
           id="newCustomer"
           className="modal fade bs-example-modal-sm"
@@ -848,14 +814,14 @@ const Main = () => {
           <div className="modal-dialog modal-sm">
             <div className="modal-content">
               <div className="modal-header">
-                <button
+                <Button
                   type="button"
                   className="close"
                   data-dismiss="modal"
                   aria-hidden="true"
                 >
                   ×
-                </button>
+                </Button>
                 <h4 className="modal-title" id="mySmallModalLabel">
                   New Customer
                   <img
@@ -869,7 +835,7 @@ const Main = () => {
               </div>
               <div className="modal-body">
                 <form id="saveCustomer" data-parsley-validate="">
-                  <div className="form-group">
+                  <FormGroup>
                     <label htmlFor="userName">Customer Name*</label>
                     <input
                       type="text"
@@ -880,8 +846,8 @@ const Main = () => {
                       className="form-control"
                       id="userName"
                     />
-                  </div>
-                  <div className="form-group">
+                  </FormGroup>
+                  <FormGroup>
                     <label htmlFor="userName">Customer Phone</label>
                     <input
                       type="text"
@@ -891,8 +857,8 @@ const Main = () => {
                       className="form-control"
                       id="phoneNumber"
                     />
-                  </div>
-                  <div className="form-group">
+                  </FormGroup>
+                  <FormGroup>
                     <label htmlFor="userName">Customer Email</label>
                     <input
                       type="email"
@@ -902,8 +868,8 @@ const Main = () => {
                       className="form-control"
                       id="emailAddress"
                     />
-                  </div>
-                  <div className="form-group">
+                  </FormGroup>
+                  <FormGroup>
                     <label htmlFor="userName">Customer Address</label>
                     <input
                       type="text"
@@ -913,7 +879,7 @@ const Main = () => {
                       className="form-control"
                       id="userAddress"
                     />
-                  </div>
+                  </FormGroup>
                   <input
                     type="submit"
                     className="btn btn-primary btn-block waves-effect waves-light"
@@ -923,114 +889,79 @@ const Main = () => {
             </div>
           </div>
         </div>
-        <div
-          id="newProduct"
-          className="modal fade bs-example-modal-sm"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="mySmallModalLabel"
-          aria-hidden="true"
-          style={{ display: "none" }}
+        {/* newProduct */}
+        <CustomModal
+          toggle={() => setIsOpenProductModal(!isOpenProductModal)}
+          title={"Add Product"}
+          size="lg"
+          modalIsOpen={isOpenProductModal}
         >
-          <div className="modal-dialog modal-sm">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
-                >
-                  ×
-                </button>
-                <h4 className="modal-title" id="mySmallModalLabel">
-                  Product
-                  <img
-                    className="loading m-t-5"
-                    style={{ marginLeft: "35%" }}
-                    height="50px"
-                    src="assets/images/loading.gif"
-                    alt=""
-                  />
-                </h4>
-              </div>
-              <div className="modal-body">
-                <form id="saveProduct" encType="multipart/form-data">
-                  <input type="hidden" name="id" id="product_id" />
-                  <input type="hidden" name="img" id="img" />
-                  <input type="hidden" name="remove" id="remove_img" />
-                  <div className="form-group">
-                    <label htmlFor="userName">Category</label>
-                    <select
-                      name="category"
-                      className="form-control"
-                      id="category"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="userName">Product Name</label>
-                    <input
-                      type="text"
-                      required="required"
-                      name="name"
-                      parsley-trigger="change"
-                      placeholder="Enter a product name"
-                      className="form-control"
-                      id="productName"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="userName">Price</label>
-                    <input
-                      type="text"
-                      required="required"
-                      name="price"
-                      placeholder="Price"
-                      className="form-control"
-                      id="product_price"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="userName">Stock</label>
-                    <input
-                      type="text"
-                      name="quantity"
-                      placeholder="Available stock"
-                      className="form-control"
-                      id="quantity"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="stock"
-                        id="stock"
-                        style={{ maxWidth: 30, float: "left" }}
-                      />{" "}
-                      Disable stock check{" "}
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="userName">
-                      <span id="rmv_img" className="btn btn-xs btn-warning">
-                        Remove
-                      </span>{" "}
-                      Picture{" "}
-                    </label>
-                    <div id="current_img" />
-                    <input type="file" name="imagename" id="imagename" />
-                  </div>
-                  <input
-                    type="submit"
-                    id="submitProduct"
-                    className="btn btn-primary btn-block waves-effect waves-light"
-                  />
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+          <form id="saveProduct" encType="multipart/form-data">
+            <input type="hidden" name="id" id="product_id" />
+            <input type="hidden" name="img" id="img" />
+            <input type="hidden" name="remove" id="remove_img" />
+            <FormGroup>
+              <Label>Category</Label>
+              <Input type="select" placeholder="Enter Category">
+                <option>1</option>
+              </Input>
+            </FormGroup>
+
+            <FormGroup>
+              <Label htmlFor="userName">Product Name</Label>
+              <Input
+                type="text"
+                required="required"
+                name="name"
+                placeholder="Enter a product name"
+                id="productName"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="userName">Price</Label>
+              <Input
+                type="text"
+                required="required"
+                name="price"
+                placeholder="Price"
+                className="form-control"
+                id="product_price"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="userName">Stock</Label>
+              <Input
+                type="text"
+                name="quantity"
+                placeholder="Available stock"
+                className="form-control"
+                id="quantity"
+              />
+            </FormGroup>
+            <FormGroup check>
+              <Input type="checkbox" name="stock" id="stock" />{" "}
+              <Label check>Disable stock check</Label>
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="userName">
+                <span id="rmv_img" className="btn btn-xs btn-warning">
+                  Remove
+                </span>{" "}
+                Picture{" "}
+              </Label>
+              <div id="current_img" />
+              <Input type="file" name="imagename" id="imagename" />
+            </FormGroup>
+            <Button
+              block
+              type="submit"
+              id="submitProduct"
+              className="btn btn-primary btn-block waves-effect waves-light"
+            >
+              Submit
+            </Button>
+          </form>
+        </CustomModal>
         {/* newCategory */}
         <CustomModal
           modalIsOpen={isOpenNewCategory}
@@ -1042,7 +973,7 @@ const Main = () => {
               e.preventDefault();
             }}
           >
-            <div className="form-group">
+            <FormGroup>
               <label htmlFor="userName">Name</label>
               <input id="category_id" type="hidden" name="id" />
               <input
@@ -1053,7 +984,7 @@ const Main = () => {
                 placeholder="Enter a category name"
                 className="form-control"
               />
-            </div>
+            </FormGroup>
             <Button
               block
               type="submit"
@@ -1065,101 +996,69 @@ const Main = () => {
           </form>
         </CustomModal>
         {/* Products */}
-
-        {/* <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
+        <CustomModal
+          header={
+            <div className="modal-header justify-content-between">
+              <h4 className="modal-title" id="mySmallModalLabel">
+                Products
+                {/* <img
+                  className="loading m-t-5"
+                  style={{ marginLeft: "35%" }}
+                  height="50px"
+                  src="assets/images/loading.gif"
+                  alt=""
+                /> */}
+              </h4>
+              <div>
+                <Button className="btn btn-white me-4">Download</Button>
+                <Button
+                  className="btn btn-white text-xl"
+                  onClick={() => setIsOpenProductList(false)}
                 >
-                  ×
-                </button>
-                <h4 className="modal-title" id="mySmallModalLabel">
-                  Products
-                  <img
-                    className="loading m-t-5"
-                    style={{ marginLeft: "35%" }}
-                    height="50px"
-                    src="assets/images/loading.gif"
-                    alt=""
-                  />
-                  <button className="btn btn-white pull-right" id="print_list">
-                    Download
-                  </button>
-                </h4>
-              </div> */}
-        <CustomModal modalIsOpen={true}>
-          <div className="w-100">
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th>Barcode</th>
-                  <th>Item</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Stock</th>
-                  <th>Category</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody />
-            </Table>
-          </div>
-        </CustomModal>
-        {/* Users */}
-        <div
-          id="Users"
-          className="modal fade bs-example-modal-sm"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="mySmallModalLabel"
-          aria-hidden="true"
-          style={{ display: "none" }}
-        >
-          <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
-                >
-                  ×
-                </button>
-                <h4 className="modal-title" id="mySmallModalLabel">
-                  Users
-                  <img
-                    className="loading m-t-5"
-                    style={{ marginLeft: "35%" }}
-                    height="50px"
-                    src="assets/images/loading.gif"
-                    alt=""
-                  />
-                </h4>
-              </div>
-              <div
-                className="modal-body"
-                id="all_userss"
-                style={{ padding: 20, paddingRight: 40 }}
-              >
-                <table className="table table-bordered" id="userList">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Username</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody id="user_list" />
-                </table>
+                  X
+                </Button>
               </div>
             </div>
-          </div>
-        </div>
-        {/* Categories */}
+          }
+          size="xl"
+          modalIsOpen={isOpenProductList}
+        >
+          <Table responsive>
+            <thead>
+              <tr>
+                <th>Barcode</th>
+                <th>Item</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Category</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody />
+          </Table>
+        </CustomModal>
+        {/* Users */}
+
+        <CustomModal
+          modalIsOpen={isOpenUsersList}
+          title="Users"
+          toggle={() => setIsOpenUsersList(!isOpenUsersList)}
+          size="lg"
+        >
+          <Table responsive className="table table-bordered" id="userList">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="user_list" />
+          </Table>
+        </CustomModal>
+        {/* Categories
         <div
           id="Categories"
           className="modal fade bs-example-modal-sm"
@@ -1172,14 +1071,14 @@ const Main = () => {
           <div className="modal-dialog modal-md">
             <div className="modal-content">
               <div className="modal-header">
-                <button
+                <Button
                   type="button"
                   className="close"
                   data-dismiss="modal"
                   aria-hidden="true"
                 >
                   ×
-                </button>
+                </Button>
                 <h4 className="modal-title" id="mySmallModalLabel">
                   Categories
                   <img
@@ -1204,248 +1103,161 @@ const Main = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* user Modal */}
-        <div
-          id="userModal"
-          className="modal fade bs-example-modal-sm"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="mySmallModalLabel"
-          aria-hidden="true"
-          style={{ display: "none" }}
+        <CustomModal
+          title="Account Infomarion"
+          toggle={() => setIsOpenUser(!isOpenUser)}
+          modalIsOpen={isOpenUser}
         >
-          <div className="modal-dialog modal-sm">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
-                >
-                  ×
-                </button>
-                <h4 className="modal-title" id="mySmallModalLabel">
-                  Account Infomarion
-                  <img
-                    className="loading m-t-5"
-                    style={{ marginLeft: "35%" }}
-                    height="50px"
-                    src="assets/images/loading.gif"
-                    alt=""
-                  />
-                </h4>
-              </div>
-              <div className="modal-body">
-                <form id="saveUser" data-parsley-validate="">
-                  <input type="hidden" name="id" id="user_id" />
-                  <div className="form-group">
-                    <label htmlFor="userName">Name*</label>
-                    <input
-                      type="text"
-                      required="required"
-                      name="fullname"
-                      parsley-trigger="change"
-                      placeholder="Enter name"
-                      className="form-control"
-                      id="fullname"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="userName">Username*</label>
-                    <input
-                      type="text"
-                      name="username"
-                      parsley-trigger="change"
-                      placeholder="Login Username"
-                      className="form-control"
-                      id="username"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="userName">Password</label>
-                    <input
-                      type="password"
-                      name="password"
-                      parsley-trigger="change"
-                      placeholder="Password"
-                      className="form-control"
-                      id="password"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="userName">Repeat Password</label>
-                    <input
-                      type="password"
-                      name="pass"
-                      parsley-trigger="change"
-                      placeholder="Repeat"
-                      className="form-control"
-                      id="pass"
-                    />
-                  </div>
-                  <div className="perms">
-                    <h4 style={{ fontSize: 22, marginTop: 20 }}>Permissions</h4>
-                    <hr />
-                    <div className="form-group">
-                      <span>
-                        <input
-                          type="checkbox"
-                          name="perm_products"
-                          id="perm_products"
-                        />{" "}
-                        Manage Products and Stock{" "}
-                      </span>
-                    </div>
-                    <div className="form-group">
-                      <span>
-                        <input
-                          type="checkbox"
-                          name="perm_categories"
-                          id="perm_categories"
-                        />{" "}
-                        Manage Product Categories{" "}
-                      </span>
-                    </div>
-                    <div className="form-group">
-                      <span>
-                        <input
-                          type="checkbox"
-                          name="perm_transactions"
-                          id="perm_transactions"
-                        />{" "}
-                        View Transactions{" "}
-                      </span>
-                    </div>
-                    <div className="form-group">
-                      <span>
-                        <input
-                          type="checkbox"
-                          name="perm_users"
-                          id="perm_users"
-                        />{" "}
-                        Manage Users and Permissions{" "}
-                      </span>
-                    </div>
-                    <div className="form-group">
-                      <span>
-                        <input
-                          type="checkbox"
-                          name="perm_settings"
-                          id="perm_settings"
-                        />{" "}
-                        Manage Settings{" "}
-                      </span>
-                    </div>
-                  </div>
-                  <input
-                    type="submit"
-                    className="btn btn-primary btn-block waves-effect waves-light"
-                  />
-                </form>
-              </div>
+          <form id="saveUser" data-parsley-validate="">
+            <FormGroup>
+              <label htmlFor="userName">Name*</label>
+              <input
+                type="text"
+                required="required"
+                name="fullname"
+                parsley-trigger="change"
+                placeholder="Enter name"
+                className="form-control"
+                id="fullname"
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor="userName">Username*</label>
+              <input
+                type="text"
+                name="username"
+                parsley-trigger="change"
+                placeholder="Login Username"
+                className="form-control"
+                id="username"
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor="userName">Password</label>
+              <input
+                type="password"
+                name="password"
+                parsley-trigger="change"
+                placeholder="Password"
+                className="form-control"
+                id="password"
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor="userName">Repeat Password</label>
+              <input
+                type="password"
+                name="pass"
+                parsley-trigger="change"
+                placeholder="Repeat"
+                className="form-control"
+                id="pass"
+              />
+            </FormGroup>
+            <div className="">
+              <h4 style={{ fontSize: 22, marginTop: 20 }}>Permissions</h4>
+              <hr />
+              <FormGroup>
+                <span>
+                  <Input
+                    type="checkbox"
+                    name="perm_products"
+                    id="perm_products"
+                  />{" "}
+                  Manage Products and Stock{" "}
+                </span>
+              </FormGroup>
+              <FormGroup>
+                <span>
+                  <Input
+                    type="checkbox"
+                    name="perm_categories"
+                    id="perm_categories"
+                  />{" "}
+                  Manage Product Categories{" "}
+                </span>
+              </FormGroup>
+              <FormGroup>
+                <span>
+                  <Input
+                    type="checkbox"
+                    name="perm_transactions"
+                    id="perm_transactions"
+                  />{" "}
+                  View Transactions{" "}
+                </span>
+              </FormGroup>
+              <FormGroup>
+                <span>
+                  <Input type="checkbox" name="perm_users" id="perm_users" />{" "}
+                  Manage Users and Permissions{" "}
+                </span>
+              </FormGroup>
+              <FormGroup>
+                <span>
+                  <Input
+                    type="checkbox"
+                    name="perm_settings"
+                    id="perm_settings"
+                  />{" "}
+                  Manage Settings{" "}
+                </span>
+              </FormGroup>
             </div>
-          </div>
-        </div>
+            <input
+              type="submit"
+              className="btn btn-primary btn-block waves-effect waves-light"
+            />
+          </form>
+        </CustomModal>
         {/* holdOrdersModal */}
-        <div
-          id="holdOrdersModal"
-          className="modal fade bs-example-modal-lg"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="myLargeModalLabel"
-          aria-hidden="true"
-          style={{ display: "none" }}
+        <CustomModal
+          modalIsOpen={isOpenOpenTabs}
+          size="lg"
+          toggle={() => setIsOpenOpenTabs(!isOpenOpenTabs)}
+          title="Open Orders"
         >
-          <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
-                >
-                  ×
-                </button>
-                <h4 className="modal-title" id="myLargeModalLabel">
-                  Open Orders
-                </h4>
-              </div>
-              <div className="modal-body">
-                <input
-                  type="text"
-                  id="holdOrderInput"
-                  placeholder="Search order by reference"
-                  className="holdOrderInput form-control"
-                />
-                <div className="holdOrderKeyboard" />
-                <br />
-                <div
-                  className="row"
-                  style={{
-                    height: 460,
-                    overflowX: "hidden",
-                    overflowY: "scroll",
-                  }}
-                  id="randerHoldOrders"
-                >
-                  <p>
-                    please wait <span className="dot" />{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Input
+            type="text"
+            id="holdOrderInput"
+            placeholder="Search order by reference"
+            className="holdOrderInput form-control"
+          />
+          <div className="holdOrderKeyboard" />
+          <br />
+          <div
+            className="row"
+            style={{
+              height: 460,
+              overflowX: "hidden",
+              overflowY: "scroll",
+            }}
+            id="randerHoldOrders"
+          ></div>
+        </CustomModal>
         {/* customerModal */}
-        <div
-          id="customerModal"
-          className="modal fade bs-example-modal-lg"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="myLargeModalLabel"
-          aria-hidden="true"
-          style={{ display: "none" }}
+        <CustomModal
+          modalIsOpen={isOpenCustomerOders}
+          size="lg"
+          title="Customer Orders"
+          toggle={() => setIsOpenCustomerOders(!isOpenCustomerOders)}
         >
-          <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
-                >
-                  ×
-                </button>
-                <h4 className="modal-title" id="myLargeModalLabel">
-                  Customer Orders
-                </h4>
-              </div>
-              <div className="modal-body">
-                <input
-                  type="text"
-                  id="holdCustomerOrderInput"
-                  placeholder="Search order by customer name"
-                  className="holdCustomerOrderInput form-control"
-                />
-                <div className="customerOrderKeyboard" />
-                <br />
-                <div
-                  className="row"
-                  style={{ height: 460, overflow: "scroll" }}
-                  id="randerCustomerOrders"
-                >
-                  <p>
-                    please wait <span className="dot" />{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Input
+            type="text"
+            id="holdCustomerOrderInput"
+            placeholder="Search order by customer name"
+            className="holdCustomerOrderInput form-control"
+          />
+          <div className="customerOrderKeyboard" />
+          <br />
+          <div
+            className="row"
+            style={{ height: 460, overflow: "scroll" }}
+            id="randerCustomerOrders"
+          ></div>
+        </CustomModal>
         {/* orderModal */}
         <div
           id="orderModal"
@@ -1459,21 +1271,21 @@ const Main = () => {
           <div className="modal-dialog modal-sm">
             <div className="modal-content">
               <div className="modal-header">
-                <button
+                <Button
                   className="btn btn-sm btn-default"
                   onclick="$(this).print()"
                 >
                   Print
-                </button>{" "}
+                </Button>{" "}
                 <br />{" "}
-                <button
+                <Button
                   type="button"
                   className="close"
                   data-dismiss="modal"
                   aria-hidden="true"
                 >
                   ×
-                </button>
+                </Button>
               </div>
               <div className="modal-body" id="viewTransaction"></div>
               <div className="alert alert-danger" style={{ fontSize: 11 }}>
@@ -1483,49 +1295,25 @@ const Main = () => {
             </div>
           </div>
         </div>
-
         {/* settingsModal */}
         <CustomModal
           modalIsOpen={isOpenSettingsModal}
           title={"Settings"}
           toggle={() => setIsOpenSettingsModal(!isOpenSettingsModal)}
         >
-          {/* <div className="modal-dialog modal-md">
-            <div className="modal-content"> */}
-          {/* <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-hidden="true"
-                >
-                  ×
-                </button>
-                <h4 className="modal-title" id="mySmallModalLabel">
-                  Settings
-                  <img
-                    className="loading m-t-5"
-                    style={{ marginLeft: "35%" }}
-                    height="50px"
-                    src="assets/images/loading.gif"
-                    alt=""
-                  />
-                </h4>
-              </div> */}
-          {/* <div className="modal-body"> */}
-          <div className="form-group">
+          <FormGroup>
             <label htmlFor="app">Application</label>
-            <select name="app" id="app" className="form-control">
+            <Input type="select" name="app" id="app" className="form-control">
               <option>Standalone Point of Sale</option>
               <option>Network Point of Sale Terminal</option>
               <option>Network Point of Sale Server</option>
-            </select>
-          </div>
+            </Input>
+          </FormGroup>
           <form id="net_settings_form">
             <div className="row">
-              <div className="form-group">
-                <label htmlFor="userName">Server IP Address*</label>
-                <input
+              <FormGroup>
+                <Label htmlFor="userName">Server IP Address*</Label>
+                <Input
                   type="text"
                   required="required"
                   placeholder="Enter the IP address of the admin computer."
@@ -1533,12 +1321,12 @@ const Main = () => {
                   className="form-control"
                   id="ip"
                 />
-              </div>
+              </FormGroup>
               <div className="row">
                 <div className="col-md-5">
-                  <div className="form-group">
-                    <label htmlFor="userName">Till Number*</label>
-                    <input
+                  <FormGroup>
+                    <Label htmlFor="userName">Till Number*</Label>
+                    <Input
                       type="text"
                       required="required"
                       placeholder="Enter a number"
@@ -1546,14 +1334,14 @@ const Main = () => {
                       className="form-control"
                       id="till"
                     />
-                  </div>
+                  </FormGroup>
                 </div>
                 <div className="col-md-7">
-                  <div className="form-group">
-                    <label htmlFor="userName">
+                  <FormGroup>
+                    <Label htmlFor="userName">
                       Hardware Identification Number{" "}
-                    </label>
-                    <input
+                    </Label>
+                    <Input
                       type="text"
                       required="required"
                       name="mac"
@@ -1561,17 +1349,18 @@ const Main = () => {
                       id="mac"
                       readOnly="readonly"
                     />
-                  </div>
+                  </FormGroup>
                 </div>
               </div>
-              <div className="form-group">
-                <input
-                  id="save_settings"
+              <FormGroup>
+                <Button
+                  block
                   type="submit"
                   className="btn btn-default btn-block waves-effect waves-light"
-                  defaultValue="Save Settings"
-                />
-              </div>
+                >
+                  Save Settings
+                </Button>
+              </FormGroup>
             </div>
           </form>
           <form id="settings_form" encType="multipart/form-data">
@@ -1580,7 +1369,7 @@ const Main = () => {
             <input type="hidden" name="remove" id="remove_logo" />
             <div className="row">
               <div className="col-md-6">
-                <div className="form-group">
+                <FormGroup>
                   <label htmlFor="userName">Store Name</label>
                   <input
                     type="text"
@@ -1589,8 +1378,8 @@ const Main = () => {
                     className="form-control"
                     id="store"
                   />
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup>
                   <label htmlFor="userName">Address Line 1</label>
                   <input
                     type="text"
@@ -1599,8 +1388,8 @@ const Main = () => {
                     className="form-control"
                     id="address_one"
                   />
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup>
                   <label htmlFor="userName">Address Line 2</label>
                   <input
                     type="text"
@@ -1609,8 +1398,8 @@ const Main = () => {
                     className="form-control"
                     id="address_two"
                   />
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup>
                   <label htmlFor="userName">Contact Number</label>
                   <input
                     type="text"
@@ -1618,8 +1407,8 @@ const Main = () => {
                     className="form-control"
                     id="contact"
                   />
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup>
                   <label htmlFor="userName">Vat Number</label>
                   <input
                     type="text"
@@ -1628,10 +1417,10 @@ const Main = () => {
                     className="form-control"
                     id="tax"
                   />
-                </div>
+                </FormGroup>
               </div>
               <div className="col-md-6">
-                <div className="form-group">
+                <FormGroup>
                   <label htmlFor="userName">Currency Symbol</label>
                   <input
                     type="text"
@@ -1640,8 +1429,8 @@ const Main = () => {
                     className="form-control"
                     id="symbol"
                   />
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup>
                   <label htmlFor="userName">Vat Percentage</label>
                   <div style={{ width: "80%", float: "left" }}>
                     <input
@@ -1653,16 +1442,16 @@ const Main = () => {
                     />
                   </div>
                   <div className="pull-right p-t-10"> % </div>
-                </div>
+                </FormGroup>
                 <br />
                 <br />
-                <div className="form-group">
+                <FormGroup>
                   <label>
                     <input type="checkbox" name="charge_tax" id="charge_tax" />{" "}
                     Charge Vat
                   </label>
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup>
                   <label htmlFor="userName">
                     <span id="rmv_logo" className="btn btn-xs btn-warning">
                       Remove
@@ -1671,8 +1460,8 @@ const Main = () => {
                   </label>
                   <div id="current_logo" />
                   <input type="file" name="imagename" id="logoname" />
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup>
                   <label htmlFor="userName">Receipt Footer</label>
                   <textarea
                     name="footer"
@@ -1680,17 +1469,17 @@ const Main = () => {
                     id="footer"
                     defaultValue={""}
                   />
-                </div>
+                </FormGroup>
               </div>
             </div>
-            <div className="form-group">
+            <FormGroup>
               <Button
                 type="submit"
                 className="btn btn-default btn-block waves-effect waves-light"
               >
                 Save Settings
               </Button>
-            </div>
+            </FormGroup>
           </form>
           {/* </div>
             </div> */}
