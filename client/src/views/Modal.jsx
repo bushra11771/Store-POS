@@ -11,7 +11,7 @@ function CustomModal(props) {
   } = props;
 
   return (
-    <>
+    <> 
       <Modal  isOpen={modalIsOpen} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
         <ModalBody>{children}</ModalBody>
