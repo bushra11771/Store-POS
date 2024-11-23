@@ -762,7 +762,15 @@ const Main = () => {
           </div>
         </CustomModal>
 
-        <CustomModal modalIsOpen={isOpenPaymentModal}>
+        <CustomModal modalIsOpen={isOpenPaymentModal}
+          toggle={() => setIsOpenPaymentModal(!isOpenPaymentModal)}
+          title={"Category"}
+        >
+        <form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
           <h4 className="modal-title" id="mySmallModalLabel">
             Products
             <img
@@ -795,6 +803,7 @@ const Main = () => {
               <tbody id="product_list"></tbody>
             </Table>
           </div>
+          </form>
           {/* </div> */}
         </CustomModal>
 
@@ -1089,7 +1098,7 @@ const Main = () => {
                   </button>
                 </h4>
               </div> */}
-        <CustomModal modalIsOpen={true}>
+        <CustomModal modalIsOpen={false}>
           <div className="w-100">
             <Table responsive>
               <thead>
